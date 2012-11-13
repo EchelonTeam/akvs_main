@@ -1,0 +1,87 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html dir="ltr" xmlns="http://www.w3.org/1999/xhtml"  lang="ru">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=win-1251" />
+<title>Трассы</title>
+<body>
+	<h1>Отчет по трассам</h1>
+	<form>
+	<input type="button" onclick="openALL();" value="Открыть все"></input>
+	</form>
+<script language="javascript">
+var x= [[ 0, 200,1, "a()"], [0, 400,1, "b()"], [0, 700,1, "c()"], [0, 500,1, "d()"], [200,300,1,"e()"],[300,555,1,"u()"],[300,666,1,"y()"],[200,565,1,"sdf()"]];
+
+function f( x)
+{
+	document.write( "<ul>");
+	for( var i= 0; i< x.length; i++)
+	{
+		if( x[ i][ 0]== 0)	document.write( 
+								"<LI onclick=\"g(x,"+ i+ ");\">"+
+									"<div>"+ x[ i][ 3]+ " id="+ i+ "</div>"+
+									"<div id=\""+ i+ "\" open=\"0\"></div>"+
+								"</LI>" );
+	}
+	document.write( "<ul>");
+}
+
+f( x);
+//x - массив 
+//t - id эллемента
+function g( x, t)
+{
+	var h= document.getElementById( t);
+	//если элемент уже открыт, то ничего не делать.
+	var isopen= h.getAttribute( "open");
+	if( isopen== "1") 
+	{	//открыт
+		
+		return;
+	}
+	else
+	{  //закрыт то открыть эллемент
+		
+		
+		//иначе начнем открывать под деревья
+		var r= x[ t][ 1];
+		var trig= false;
+		var string= "";
+		for( var i= 0; i< x.length; i++)
+		{
+			if( x[ i][ 0]== r)
+			{
+				if( trig== false)
+				{
+					string += "<ul>";
+				}
+				trig = true;
+				string += "<LI onclick=\"g(x,"+ i+ ");\">"+ "<div>"+ x[ i][ 3]+ " id="+ i+ "</div>"+ "<div id=\""+ i+"\" open=\"0\"></div>"+ "</LI>";
+			}
+		}
+		if( trig== true ) string += "</ul>\n";
+		p(t,string);
+		//setTimeout( p( t, string), 1000);
+		
+	}
+}
+
+function p( id, string)
+{
+	//alert(id);
+	var el=document.getElementById(id);
+	el.setAttribute( "open", "1");
+	el.innerHTML= string;
+	//alert(100);
+}
+
+function openALL()
+{
+	for(var i=0; i< x.length; i++)
+	{
+		g(x,i);
+	}
+}
+</script>
+
+</body>
+</html>
